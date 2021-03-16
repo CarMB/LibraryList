@@ -1,6 +1,7 @@
 package org.iesfm.library;
 
 import org.iesfm.library.exception.InvalidCpException;
+import org.iesfm.library.exception.InvalidNifException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ public class LibraryTests {
     private Library library;
     private List<Book> books;
     private List<Member> members;
+    private List<BookLend> booklends;
 
     @Before
     public void setUp(){
@@ -27,7 +29,11 @@ public class LibraryTests {
         members = new LinkedList<>();
         members.add(new Member(1, "1", "Fulanito", "adsf", 5000));
         members.add(new Member(2, "2", "Fulanito", "adsf", 5000));
-        library = new Library("Mi libre", books, members, new LinkedList<>());
+        booklends = new LinkedList<>();
+        booklends.add(new BookLend(2456,"749387f", "8-9-2020","18-9-2020"));
+        booklends.add(new BookLend(2476,"749389f", "3-9-2020","11-9-2020"));
+        library = new Library("Mi libre", books, members, booklends);
+
     }
 
     @Test
@@ -46,4 +52,13 @@ public class LibraryTests {
     public void getMembersByCpInvalidTest() throws InvalidCpException {
         library.findMembers(500);
     }
+
+
+    @Test
+
+    public void getBooklend() throws InvalidNifException{
+        List<BookLend> res = library.findBooklend("1");
+        Assert.assertEquals(booklends,res);
+    }
+
 }
