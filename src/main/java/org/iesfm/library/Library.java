@@ -21,6 +21,17 @@ public class Library implements ILibrary {
     }
 
 
+    private Book findBook(int isbn) {
+        Book found = null;
+        for (Book book : books) {
+            if (isbn == book.getIsbn()) {
+                found = book;
+            }
+        }
+        return found;
+    }
+
+
     private Member findMember(String nif) {
         Member found = null;
         for (Member member : members) {
@@ -33,13 +44,18 @@ public class Library implements ILibrary {
 
     @Override
     public List<Book> getBooksByBooklend(String nif) throws InvalidNifException {
-        return null;
+        List<BookLend> memberLends = getBookLends(nif);
+        List<Book> books = new LinkedList<>();
+        for (BookLend bookLend : bookLends) {
+            Book book = findBook(bookLend.getIsbn());
+             books.add(book);
+        }return books;
     }
 
     @Override
     public List<BookLend> findBooklend(String nif) throws InvalidNifException {
         Member member = findMember(nif);
-        if (member == null){
+        if (member == null) {
             throw new InvalidNifException();
         }
         List<BookLend> nifBooklends = new LinkedList<>();
@@ -101,7 +117,7 @@ public class Library implements ILibrary {
         this.members = members;
     }
 
-    public List<BookLend> getBookLends() {
+    public List<BookLend> getBookLends(String nif) {
         return bookLends;
     }
 

@@ -14,4 +14,6 @@ public interface ILibrary {
     List<BookLend> findBooklend(String nif) throws  InvalidNifException;
 
     List<Book> getBooksByBooklend(String nif) throws InvalidNifException;
+
+
 }
